@@ -1,4 +1,4 @@
-package sq.mayv.movieapp
+package sq.mayv.movieapp.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
