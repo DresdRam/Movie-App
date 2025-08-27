@@ -1,5 +1,6 @@
 [versions]
 agp = "8.9.0"
+gson = "2.10.1"
 kotlin = "2.0.21"
 ksp = "2.0.20-1.0.24"
 gms = "4.4.3"
@@ -27,6 +28,7 @@ okhttpVersion = "4.10.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

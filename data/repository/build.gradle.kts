@@ -33,6 +33,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":data:model"))
+    implementation(project(":data:local"))
+    implementation(project(":data:remote"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
