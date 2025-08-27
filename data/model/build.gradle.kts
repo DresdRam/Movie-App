@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "sq.mayv.data.model"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24

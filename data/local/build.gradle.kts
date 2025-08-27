@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "sq.mayv.data.local"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
@@ -37,6 +37,9 @@ android {
 
 dependencies {
 
+    implementation(project(":core:common"))
+    implementation(project(":data:model"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,7 +51,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.hilt.android.compiler)
-    androidTestImplementation(libs.hilt.android.testing)
 
     // Room DB
     implementation(libs.room.runtime)

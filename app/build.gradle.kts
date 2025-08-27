@@ -6,21 +6,18 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.safe.args)
 }
-
 android {
     namespace = "sq.mayv.movieapp"
-    compileSdk = 35
-
+    compileSdk = 36
     defaultConfig {
         applicationId = "sq.mayv.movieapp"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false

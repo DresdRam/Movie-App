@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "sq.mayv.feature.movie_details"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 24
