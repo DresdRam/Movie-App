@@ -1,10 +1,10 @@
 package sq.mayv.data.remote.datasource
 
+import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
 import sq.mayv.data.model.movies.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
-import sq.mayv.data.model.network.PagingResponse
 import sq.mayv.data.remote.network.MoviesApiService
 import javax.inject.Inject
 
@@ -15,41 +15,81 @@ class RemoteDataSource @Inject constructor(
     override suspend fun loadUpcomingMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>> {
-        TODO("Not yet implemented")
+    ): GenericState<List<MovieDetails>> {
+        val results = apiService.getUpcomingMovies(page = pageIndex, language = language.code)
+        return if (results.isSuccessful) {
+            val body = results.body()?.results ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
     override suspend fun loadPopularMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>> {
-        TODO("Not yet implemented")
+    ): GenericState<List<MovieDetails>> {
+        val results = apiService.getPopularMovies(page = pageIndex, language = language.code)
+        return if (results.isSuccessful) {
+            val body = results.body()?.results ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
     override suspend fun loadTrendingMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>> {
-        TODO("Not yet implemented")
+    ): GenericState<List<MovieDetails>> {
+        val results = apiService.getTrendingMovies(page = pageIndex, language = language.code)
+        return if (results.isSuccessful) {
+            val body = results.body()?.results ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
     override suspend fun loadAllGenres(language: Language): GenericState<List<Genre>> {
-        TODO("Not yet implemented")
+        val results = apiService.getGenres(language = language.code)
+        return if (results.isSuccessful) {
+            val body = results.body()?.genres ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
     override suspend fun search(
         query: String,
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>> {
-        TODO("Not yet implemented")
+    ): GenericState<List<MovieDetails>> {
+        val results = apiService.search(
+            query = query,
+            page = pageIndex,
+            language = language.code
+        )
+        return if (results.isSuccessful) {
+            val body = results.body()?.results ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
     override suspend fun loadMovieDetails(
         movieId: Int,
         language: Language
-    ): GenericState<MovieDetails> {
-        TODO("Not yet implemented")
+    ): GenericState<MovieDetails?> {
+        val results = apiService.getMovieDetails(movieId = movieId, language = language.code)
+        return if (results.isSuccessful) {
+            val body = results.body()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
     }
 
 }

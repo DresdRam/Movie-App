@@ -1,9 +1,6 @@
 package sq.mayv.core.common
 
-import sq.mayv.core.common.ErrorCode.entries
-
 sealed interface GenericState<out T> {
-    data object Loading : GenericState<Nothing>
     data class Success<out T>(val data: T) : GenericState<T>
     data class Failure(val errorCode: ErrorCode?) : GenericState<Nothing>
 }

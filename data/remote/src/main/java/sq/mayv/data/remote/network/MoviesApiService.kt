@@ -1,5 +1,6 @@
 package sq.mayv.data.remote.network
 
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -25,7 +26,7 @@ interface MoviesApiService {
     suspend fun getGenres(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("language") language: String = "en"
-    ): GenresResponse
+    ): Response<GenresResponse>
 
     @GET(SEARCH_MOVIES_ENDPOINT)
     suspend fun search(
@@ -33,34 +34,34 @@ interface MoviesApiService {
         @Query("query") query: String,
         @Query("page") page: Int,
         @Query("language") language: String = "en"
-    ): PagingResponse<MovieDetails>
+    ): Response<PagingResponse<MovieDetails>>
 
     @GET(MOVIE_DETAILS_ENDPOINT)
     suspend fun getMovieDetails(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Path("movieId") movieId: Int,
         @Query("language") language: String = "en"
-    ): MovieDetails
+    ): Response<MovieDetails>
 
     @GET(UPCOMING_MOVIES_ENDPOINT)
     suspend fun getUpcomingMovies(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("page") page: Int,
         @Query("language") language: String = "en"
-    ): PagingResponse<MovieDetails>
+    ): Response<PagingResponse<MovieDetails>>
 
     @GET(POPULAR_MOVIES_ENDPOINT)
     suspend fun getPopularMovies(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("page") page: Int,
         @Query("language") language: String = "en"
-    ): PagingResponse<MovieDetails>
+    ): Response<PagingResponse<MovieDetails>>
 
     @GET(TRENDING_MOVIES_ENDPOINT)
     suspend fun getTrendingMovies(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("page") page: Int,
         @Query("language") language: String = "en"
-    ): PagingResponse<MovieDetails>
+    ): Response<PagingResponse<MovieDetails>>
 
 }

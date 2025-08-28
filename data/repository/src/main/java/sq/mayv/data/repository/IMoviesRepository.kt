@@ -5,24 +5,23 @@ import sq.mayv.core.common.GenericState
 import sq.mayv.data.model.movies.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
-import sq.mayv.data.model.network.PagingResponse
 
 interface IMoviesRepository {
 
     fun loadUpcomingMovies(
         pageIndex: Int,
         language: Language
-    ): Flow<GenericState<PagingResponse<MovieDetails>>>
+    ): Flow<GenericState<List<MovieDetails>>>
 
     fun loadPopularMovies(
         pageIndex: Int,
         language: Language
-    ): Flow<GenericState<PagingResponse<MovieDetails>>>
+    ): Flow<GenericState<List<MovieDetails>>>
 
     fun loadTrendingMovies(
         pageIndex: Int,
         language: Language
-    ): Flow<GenericState<PagingResponse<MovieDetails>>>
+    ): Flow<GenericState<List<MovieDetails>>>
 
     fun loadAllGenres(
         language: Language
@@ -32,13 +31,13 @@ interface IMoviesRepository {
         query: String,
         pageIndex: Int,
         language: Language
-    ): Flow<GenericState<PagingResponse<MovieDetails>>>
+    ): Flow<GenericState<List<MovieDetails>>>
 
     fun loadMovieDetails(
         movieId: Int,
         language: Language
-    ): Flow<GenericState<MovieDetails>>
+    ): Flow<GenericState<MovieDetails?>>
 
-    fun insertMovies(movies: List<MovieDetails>)
+    suspend fun insertMovies(movies: List<MovieDetails>)
 
 }

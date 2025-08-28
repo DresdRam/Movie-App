@@ -4,40 +4,35 @@ import sq.mayv.core.common.GenericState
 import sq.mayv.data.model.movies.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
-import sq.mayv.data.model.network.PagingResponse
 
 interface ILocalDataSource {
 
-    suspend fun loadUpcomingMovies(
+    suspend fun getUpcomingMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>>
+    ): GenericState<List<MovieDetails>>
 
-    suspend fun loadPopularMovies(
+    suspend fun getPopularMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>>
+    ): GenericState<List<MovieDetails>>
 
-    suspend fun loadTrendingMovies(
+    suspend fun getTrendingMovies(
         pageIndex: Int,
         language: Language
-    ): GenericState<PagingResponse<MovieDetails>>
+    ): GenericState<List<MovieDetails>>
 
     suspend fun loadAllGenres(
         language: Language
     ): GenericState<List<Genre>>
 
-    suspend fun search(
-        query: String,
-        pageIndex: Int,
-        language: Language
-    ): GenericState<PagingResponse<MovieDetails>>
-
-    suspend fun loadMovieDetails(
+    suspend fun getMovieDetails(
         movieId: Int,
         language: Language
-    ): GenericState<MovieDetails>
+    ): GenericState<MovieDetails?>
 
-    suspend fun insertMovies(movies: List<MovieDetails>)
+    suspend fun insertGenres(list: List<Genre>)
+
+    suspend fun insertMovies(list: List<MovieDetails>)
 
 }

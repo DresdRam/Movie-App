@@ -4,16 +4,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
+import sq.mayv.data.local.entity.GenreEntity
 import sq.mayv.data.local.entity.MovieDetailsEntity
+import sq.mayv.data.local.entity.relation.MovieWithGenres
 
 @Dao
 interface MoviesDao {
-
+    @Transaction
     @Query("SELECT * FROM movies WHERE id = :id")
-    suspend fun getMovieById(id: Int): MovieDetailsEntity?
+    suspend fun getMovieById(id: Int): MovieWithGenres?
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
-    suspend fun insertMovie(movie: MovieDetailsEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertGenres(genres: List<GenreEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMovies(movies: List<MovieDetailsEntity>)
 
     @Query("DELETE FROM movies WHERE id = :id")
     suspend fun deleteMovieById(id: Int)
@@ -21,19 +27,23 @@ interface MoviesDao {
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()
 
+    @Transaction
     @Query("SELECT * FROM movies")
-    suspend fun getAllMovies(): List<MovieDetailsEntity>
+    suspend fun getAllMovies(): List<MovieWithGenres>
 
-    @Query("SELECT * FROM movies WHERE title LIKE '%' || :query || '%'")
-    suspend fun searchMovies(query: String): List<MovieDetailsEntity>
+    @Query("SELECT * FROM genres")
+    suspend fun getAllGenres(): List<GenreEntity>
 
-    @Query("SELECT * FROM movies ORDER BY popularity DESC LIMIT :limit")
-    suspend fun getPopularMovies(limit: Int = 10): List<MovieDetailsEntity>
+    @Transaction
+    @Query("SELECT * FROM movies ORDER BY popularity DESC")
+    suspend fun getPopularMovies(): List<MovieWithGenres>
 
-    @Query("SELECT * FROM movies ORDER BY voteAverage DESC LIMIT :limit")
-    suspend fun getTrendingMovies(limit: Int = 10): List<MovieDetailsEntity>
+    @Transaction
+    @Query("SELECT * FROM movies ORDER BY voteAverage DESC")
+    suspend fun getTrendingMovies(): List<MovieWithGenres>
 
-    @Query("SELECT * FROM movies ORDER BY releaseDate DESC LIMIT :limit")
-    suspend fun getUpcomingMovies(limit: Int = 10): List<MovieDetailsEntity>
+    @Transaction
+    @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
+    suspend fun getUpcomingMovies(): List<MovieWithGenres>
 
 }
