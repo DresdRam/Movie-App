@@ -44,8 +44,8 @@ import coil.compose.AsyncImage
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.design.component.MessageView
 import sq.mayv.core.design.extension.shimmer
+import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.feature.home.R
-import sq.mayv.feature.home.ui.state.MovieDetailsUI
 import sq.mayv.feature.home.ui.state.MoviesUIState
 
 @Composable
@@ -203,7 +203,7 @@ fun MoviesRowShimmerView() {
 }
 
 @Composable
-fun MoviesRowView(movies: List<MovieDetailsUI>, onItemClick: (movieId: Int) -> Unit) {
+fun MoviesRowView(movies: List<MovieDetails>, onItemClick: (movieId: Int) -> Unit) {
     LazyRow {
         items(items = movies, key = { it.id }) { movie ->
             MoviesItemView(
@@ -250,7 +250,7 @@ fun MoviesItemShimmerView() {
 
 @Composable
 fun MoviesItemView(
-    movie: MovieDetailsUI,
+    movie: MovieDetails,
     onItemClick: (movieId: Int) -> Unit
 ) {
     Card(

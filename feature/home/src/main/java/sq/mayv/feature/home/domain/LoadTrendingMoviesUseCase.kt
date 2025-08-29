@@ -7,13 +7,11 @@ import kotlinx.coroutines.flow.onStart
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
 import sq.mayv.data.repository.MoviesRepository
-import sq.mayv.feature.home.mapper.MoviesModelUIMapper
 import sq.mayv.feature.home.ui.state.MoviesUIState
 import javax.inject.Inject
 
 class LoadTrendingMoviesUseCase @Inject constructor(
-    private val repository: MoviesRepository,
-    private val moviesMapper: MoviesModelUIMapper
+    private val repository: MoviesRepository
 ) {
     operator fun invoke(pageIndex: Int, languageCode: String): Flow<MoviesUIState> =
         repository.loadTrendingMovies(pageIndex = pageIndex, languageCode = languageCode).map {
@@ -22,7 +20,7 @@ class LoadTrendingMoviesUseCase @Inject constructor(
                     if (it.data.isEmpty()) {
                         MoviesUIState.Empty
                     } else {
-                        MoviesUIState.Success(movies = moviesMapper.mapToUI(list = it.data))
+                        MoviesUIState.Success(movies = it.data)
                     }
                 }
 
