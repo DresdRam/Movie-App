@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import sq.mayv.core.common.ConnectivityObserver
 import sq.mayv.feature.home.domain.LoadPopularMoviesUseCase
 import sq.mayv.feature.home.domain.LoadTrendingMoviesUseCase
 import sq.mayv.feature.home.domain.LoadUpcomingMoviesUseCase
@@ -22,8 +23,17 @@ import java.util.Locale
 class HomeViewModel @Inject constructor(
     private val upcomingMoviesUseCase: LoadUpcomingMoviesUseCase,
     private val popularMoviesUseCase: LoadPopularMoviesUseCase,
-    private val trendingMoviesUseCase: LoadTrendingMoviesUseCase
+    private val trendingMoviesUseCase: LoadTrendingMoviesUseCase,
+    connectivityObserver: ConnectivityObserver
 ) : ViewModel() {
+
+    val isConnected = connectivityObserver
+        .isConnected
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5_000),
+            false
+        )
 
     private val _upcomingMoviesState: MutableStateFlow<MoviesUIState> =
         MutableStateFlow(MoviesUIState.Loading)
@@ -55,21 +65,21 @@ class HomeViewModel @Inject constructor(
     fun getUpcomingMovies(pageIndex: Int) {
         upcomingMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
             .onEach {
-                _upcomingMoviesState.update { it }
+                _upcomingMoviesState.value = it
             }.launchIn(viewModelScope)
     }
 
     fun getPopularMovies(pageIndex: Int) {
         popularMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
             .onEach {
-                _popularMoviesState.update { it }
+                _popularMoviesState.value = it
             }.launchIn(viewModelScope)
     }
 
     fun getTrendingMovies(pageIndex: Int) {
         trendingMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
             .onEach {
-                _trendingMoviesState.update { it }
+                _trendingMoviesState.value = it
             }.launchIn(viewModelScope)
     }
 }

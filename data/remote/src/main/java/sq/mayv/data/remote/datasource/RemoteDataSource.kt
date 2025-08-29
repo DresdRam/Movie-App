@@ -1,10 +1,13 @@
 package sq.mayv.data.remote.datasource
 
+import android.util.Log
+import com.google.gson.Gson
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
 import sq.mayv.data.model.movies.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
+import sq.mayv.data.remote.BuildConfig
 import sq.mayv.data.remote.network.MoviesApiService
 import javax.inject.Inject
 
@@ -18,7 +21,12 @@ class RemoteDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         val results = apiService.getUpcomingMovies(page = pageIndex, language = language.code)
         return if (results.isSuccessful) {
-            val body = results.body()?.results ?: emptyList()
+            val gson = Gson()
+            val jsonString = gson.toJson(results.body())
+            Log.d("Remote","loadUpcomingMovies: $jsonString")
+            val body = results.body()?.results?.map {
+                it.appendImageUrl()
+            } ?: emptyList()
             GenericState.Success(data = body)
         } else {
             GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
@@ -31,7 +39,9 @@ class RemoteDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         val results = apiService.getPopularMovies(page = pageIndex, language = language.code)
         return if (results.isSuccessful) {
-            val body = results.body()?.results ?: emptyList()
+            val body = results.body()?.results?.map {
+                it.appendImageUrl()
+            } ?: emptyList()
             GenericState.Success(data = body)
         } else {
             GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
@@ -44,7 +54,9 @@ class RemoteDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         val results = apiService.getTrendingMovies(page = pageIndex, language = language.code)
         return if (results.isSuccessful) {
-            val body = results.body()?.results ?: emptyList()
+            val body = results.body()?.results?.map {
+                it.appendImageUrl()
+            } ?: emptyList()
             GenericState.Success(data = body)
         } else {
             GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
@@ -72,7 +84,9 @@ class RemoteDataSource @Inject constructor(
             language = language.code
         )
         return if (results.isSuccessful) {
-            val body = results.body()?.results ?: emptyList()
+            val body = results.body()?.results?.map {
+                it.appendImageUrl()
+            } ?: emptyList()
             GenericState.Success(data = body)
         } else {
             GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
@@ -85,11 +99,15 @@ class RemoteDataSource @Inject constructor(
     ): GenericState<MovieDetails?> {
         val results = apiService.getMovieDetails(movieId = movieId, language = language.code)
         return if (results.isSuccessful) {
-            val body = results.body()
+            val body = results.body()?.appendImageUrl()
             GenericState.Success(data = body)
         } else {
             GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
         }
     }
 
+    private fun MovieDetails.appendImageUrl(): MovieDetails {
+        this.posterPath = "${BuildConfig.IMAGE_URL}/w500${this.posterPath}"
+        return this
+    }
 }

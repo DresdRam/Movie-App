@@ -15,7 +15,6 @@ data class MovieDetailsUI(
     val budget: Long,
     val revenue: Long,
     val runtime: Int,
-    val status: String,
     val tagline: String?,
     val hasVideo: Boolean,
     val genres: List<GenreUI>

@@ -1,5 +1,6 @@
 package sq.mayv.data.repository
 
+import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import sq.mayv.core.common.ErrorCode
@@ -10,7 +11,7 @@ import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.data.remote.datasource.IRemoteDataSource
 
-class MoviesRepository(
+class MoviesRepository @Inject constructor(
     private val localDataSource: ILocalDataSource, private val remoteDataSource: IRemoteDataSource
 ) : IMoviesRepository {
 
@@ -35,6 +36,7 @@ class MoviesRepository(
                 }
             }
         } catch (e: Exception) {
+            e.printStackTrace()
             val localState =
                 localDataSource.getUpcomingMovies(
                     pageIndex = pageIndex,

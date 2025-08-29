@@ -25,10 +25,9 @@ object MoviesModelUIMapper {
             budget = single.budget,
             revenue = single.revenue,
             runtime = single.runtime,
-            status = single.status,
             tagline = single.tagline,
             hasVideo = single.hasVideo,
-            genres = GenresModelUIMapper.mapToUI(list = single.genres)
+            genres = GenresModelUIMapper.mapToUI(list = single.genres ?: emptyList())
         )
     }
 
@@ -52,7 +51,6 @@ object MoviesModelUIMapper {
             budget = single.budget,
             revenue = single.revenue,
             runtime = single.runtime,
-            status = single.status,
             tagline = single.tagline,
             hasVideo = single.hasVideo,
             genres = GenresModelUIMapper.mapToModel(list = single.genres),

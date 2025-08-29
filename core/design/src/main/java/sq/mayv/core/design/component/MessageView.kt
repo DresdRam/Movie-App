@@ -23,31 +23,38 @@ fun MessageView(
     border: BorderStroke? = null,
     message: String
 ) {
-    Card(
+    Box(
         modifier = Modifier
-            .width(300.dp)
-            .wrapContentHeight(),
-        shape = RoundedCornerShape(10.dp),
-        border = border
+            .fillMaxWidth()
+            .wrapContentHeight()
     ) {
-
-        Box(
+        Card(
             modifier = Modifier
-                .padding(vertical = 20.dp)
-                .fillMaxWidth(),
-            contentAlignment = Alignment.Center,
-            propagateMinConstraints = false
+                .width(300.dp)
+                .wrapContentHeight()
+                .align(Alignment.Center),
+            shape = RoundedCornerShape(10.dp),
+            border = border
         ) {
 
-            Text(
-                modifier = modifier
-                    .align(alignment = Alignment.Center)
-                    .padding(horizontal = 15.dp),
-                text = message,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
-            )
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 20.dp)
+                    .fillMaxWidth(),
+                contentAlignment = Alignment.Center,
+                propagateMinConstraints = false
+            ) {
+
+                Text(
+                    modifier = modifier
+                        .align(alignment = Alignment.Center)
+                        .padding(horizontal = 15.dp),
+                    text = message,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }

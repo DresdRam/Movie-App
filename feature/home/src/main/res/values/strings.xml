@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="popular_movies">Popular Movies</string>
+    <string name="trending_movies">Trending Movies</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="database_error">Database error</string>
+    <string name="server_error">Server error</string>
+    <string name="try_connecting_to_the_internet">Try connecting to the internet</string>
+</resources>

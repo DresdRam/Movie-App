@@ -1,5 +1,6 @@
 package sq.mayv.feature.home.domain
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -19,7 +20,11 @@ class LoadUpcomingMoviesUseCase @Inject constructor(
         repository.loadUpcomingMovies(pageIndex = pageIndex, languageCode = languageCode).map {
             when (it) {
                 is GenericState.Success -> {
-                    MoviesUIState.Success(movies = moviesMapper.mapToUI(list = it.data))
+                    if (it.data.isEmpty()) {
+                        MoviesUIState.Empty
+                    } else {
+                        MoviesUIState.Success(movies = moviesMapper.mapToUI(list = it.data))
+                    }
                 }
 
                 is GenericState.Failure -> {

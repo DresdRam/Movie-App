@@ -14,12 +14,12 @@ interface MoviesApiService {
 
     companion object {
         private const val API_KEY = BuildConfig.API_KEY
-        private const val GENRES_ENDPOINT = "/genre/movie/list"
-        private const val SEARCH_MOVIES_ENDPOINT = "/search/movie"
-        private const val MOVIE_DETAILS_ENDPOINT = "/movie/{movieId}"
-        private const val UPCOMING_MOVIES_ENDPOINT = "/movie/upcoming"
-        private const val POPULAR_MOVIES_ENDPOINT = "/movie/popular"
-        private const val TRENDING_MOVIES_ENDPOINT = "/trending/movie/day"
+        private const val GENRES_ENDPOINT = "genre/movie/list"
+        private const val SEARCH_MOVIES_ENDPOINT = "search/movie"
+        private const val MOVIE_DETAILS_ENDPOINT = "movie/{movieId}"
+        private const val UPCOMING_MOVIES_ENDPOINT = "movie/upcoming"
+        private const val POPULAR_MOVIES_ENDPOINT = "movie/popular"
+        private const val TRENDING_MOVIES_ENDPOINT = "trending/movie/day"
     }
 
     @GET(GENRES_ENDPOINT)

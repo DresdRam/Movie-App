@@ -19,7 +19,6 @@ data class MovieDetailsEntity(
     val budget: Long,
     val revenue: Long,
     val runtime: Int,
-    val status: String,
     val tagline: String?,
     val video: Boolean
 )

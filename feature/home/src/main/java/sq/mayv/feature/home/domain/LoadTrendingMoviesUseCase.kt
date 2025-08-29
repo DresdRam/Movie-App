@@ -19,7 +19,11 @@ class LoadTrendingMoviesUseCase @Inject constructor(
         repository.loadTrendingMovies(pageIndex = pageIndex, languageCode = languageCode).map {
             when (it) {
                 is GenericState.Success -> {
-                    MoviesUIState.Success(movies = moviesMapper.mapToUI(list = it.data))
+                    if (it.data.isEmpty()) {
+                        MoviesUIState.Empty
+                    } else {
+                        MoviesUIState.Success(movies = moviesMapper.mapToUI(list = it.data))
+                    }
                 }
 
                 is GenericState.Failure -> {

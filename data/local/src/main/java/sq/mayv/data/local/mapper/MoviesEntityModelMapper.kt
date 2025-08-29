@@ -28,7 +28,6 @@ object MoviesEntityModelMapper {
             budget = single.movie.budget,
             revenue = single.movie.revenue,
             runtime = single.movie.runtime,
-            status = single.movie.status,
             tagline = single.movie.tagline,
             hasVideo = single.movie.video,
             genres = GenresEntityModelMapper.mapToModel(list = single.genres),
@@ -56,7 +55,6 @@ object MoviesEntityModelMapper {
             budget = single.budget,
             revenue = single.revenue,
             runtime = single.runtime,
-            status = single.status,
             tagline = single.tagline,
             video = single.hasVideo,
         )
