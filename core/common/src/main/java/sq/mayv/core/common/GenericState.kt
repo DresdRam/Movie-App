@@ -2,7 +2,7 @@ package sq.mayv.core.common
 
 sealed interface GenericState<out T> {
     data class Success<out T>(val data: T) : GenericState<T>
-    data class Failure(val errorCode: ErrorCode?) : GenericState<Nothing>
+    data class Failure(val errorCode: ErrorCode) : GenericState<Nothing>
 }
 
 enum class ErrorCode(val code: Int) {
