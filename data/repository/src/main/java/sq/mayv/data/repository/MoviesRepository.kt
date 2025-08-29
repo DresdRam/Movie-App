@@ -15,11 +15,15 @@ class MoviesRepository(
 ) : IMoviesRepository {
 
     override fun loadUpcomingMovies(
-        pageIndex: Int, language: Language
+        pageIndex: Int,
+        languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
             val remoteState =
-                remoteDataSource.loadUpcomingMovies(pageIndex = pageIndex, language = language)
+                remoteDataSource.loadUpcomingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             when (remoteState) {
                 is GenericState.Success -> {
                     localDataSource.insertMovies(list = remoteState.data)
@@ -32,17 +36,24 @@ class MoviesRepository(
             }
         } catch (e: Exception) {
             val localState =
-                localDataSource.getUpcomingMovies(pageIndex = pageIndex, language = language)
+                localDataSource.getUpcomingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             emit(localState)
         }
     }
 
     override fun loadPopularMovies(
-        pageIndex: Int, language: Language
+        pageIndex: Int,
+        languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
             val remoteState =
-                remoteDataSource.loadPopularMovies(pageIndex = pageIndex, language = language)
+                remoteDataSource.loadPopularMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             when (remoteState) {
                 is GenericState.Success -> {
                     localDataSource.insertMovies(list = remoteState.data)
@@ -55,17 +66,24 @@ class MoviesRepository(
             }
         } catch (e: Exception) {
             val localState =
-                localDataSource.getPopularMovies(pageIndex = pageIndex, language = language)
+                localDataSource.getPopularMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             emit(localState)
         }
     }
 
     override fun loadTrendingMovies(
-        pageIndex: Int, language: Language
+        pageIndex: Int,
+        languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
             val remoteState =
-                remoteDataSource.loadTrendingMovies(pageIndex = pageIndex, language = language)
+                remoteDataSource.loadTrendingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             when (remoteState) {
                 is GenericState.Success -> {
                     localDataSource.insertMovies(list = remoteState.data)
@@ -78,15 +96,18 @@ class MoviesRepository(
             }
         } catch (e: Exception) {
             val localState =
-                localDataSource.getTrendingMovies(pageIndex = pageIndex, language = language)
+                localDataSource.getTrendingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
             emit(localState)
         }
     }
 
-    override fun loadAllGenres(language: Language): Flow<GenericState<List<Genre>>> = flow {
+    override fun loadAllGenres(languageCode: String): Flow<GenericState<List<Genre>>> = flow {
         try {
             val remoteState =
-                remoteDataSource.loadAllGenres(language = language)
+                remoteDataSource.loadAllGenres(language = Language.from(code = languageCode))
             when (remoteState) {
                 is GenericState.Success -> {
                     localDataSource.insertGenres(list = remoteState.data)
@@ -99,7 +120,7 @@ class MoviesRepository(
             }
         } catch (e: Exception) {
             val localState =
-                localDataSource.loadAllGenres(language = language)
+                localDataSource.loadAllGenres(language = Language.from(code = languageCode))
             emit(localState)
         }
     }
@@ -107,13 +128,13 @@ class MoviesRepository(
     override fun search(
         query: String,
         pageIndex: Int,
-        language: Language
+        languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
             val remoteState = remoteDataSource.search(
                 query = query,
                 pageIndex = pageIndex,
-                language = language
+                language = Language.from(code = languageCode)
             )
             emit(remoteState)
         } catch (e: Exception) {
@@ -123,11 +144,14 @@ class MoviesRepository(
 
     override fun loadMovieDetails(
         movieId: Int,
-        language: Language
+        languageCode: String
     ): Flow<GenericState<MovieDetails?>> = flow {
         try {
             val remoteState =
-                remoteDataSource.loadMovieDetails(movieId = movieId, language = language)
+                remoteDataSource.loadMovieDetails(
+                    movieId = movieId,
+                    language = Language.from(code = languageCode)
+                )
             when (remoteState) {
                 is GenericState.Success -> {
                     remoteState.data?.let {
@@ -142,7 +166,10 @@ class MoviesRepository(
             }
         } catch (e: Exception) {
             val localState =
-                localDataSource.getMovieDetails(movieId = movieId, language = language)
+                localDataSource.getMovieDetails(
+                    movieId = movieId,
+                    language = Language.from(code = languageCode)
+                )
             emit(localState)
         }
     }
