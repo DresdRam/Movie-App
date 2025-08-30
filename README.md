@@ -31,8 +31,8 @@ The app is designed with multi layer MVVM architecture for better control over i
 
 ## Notice
 
-Due to being a simple task, i pushed a commit to move my Api key from local.properties file directly to build configs.
-
+For simplicity in this task, I moved my API key from the local.properties file directly into the build config.
+I’m aware that the recommended and more secure approach is to keep API keys in the local.properties file (or use other secure storage mechanisms), and I would normally follow that practice in a production environment.
 
 
 ## Features
