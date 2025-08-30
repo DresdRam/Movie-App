@@ -9,6 +9,9 @@ A simple movies app that fetches movies data using [TheMovieDB API](https://deve
 </p>
 
 
+## UI
+The UI design of this project is inspired by the [Cinemax Movie Apps UI Kit on Figma](https://www.figma.com/design/wIvEM76AxAkiAsZbx7lQHp/Cinemax---Movie-Apps-UI-Kit--Community-?node-id=5-2&p=f&t=aKAMwsxzHPOESMuM-0).
+
 ## To improve/add
 - [X] Unit test cases
 - [X] Ui test cases
