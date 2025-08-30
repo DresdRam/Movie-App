@@ -253,6 +253,7 @@ fun ExpandableText(
     minimizedMaxLines: Int = 3
 ) {
     var expanded by remember { mutableStateOf(false) }
+    var isOverflowing by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier
@@ -265,17 +266,24 @@ fun ExpandableText(
             text = text,
             maxLines = if (expanded) Int.MAX_VALUE else minimizedMaxLines,
             overflow = TextOverflow.Ellipsis,
+            onTextLayout = { textLayoutResult ->
+                if (!expanded) {
+                    isOverflowing = textLayoutResult.hasVisualOverflow
+                }
+            },
             style = MaterialTheme.typography.bodyMedium
         )
 
-        TextButton(
-            onClick = { expanded = !expanded },
-            contentPadding = PaddingValues(0.dp)
-        ) {
-            Text(
-                text = if (expanded) stringResource(R.string.read_less) else stringResource(R.string.read_more),
-                style = MaterialTheme.typography.labelLarge.copy(color = MaterialTheme.colorScheme.primary)
-            )
+        if (isOverflowing || expanded) {
+            TextButton(
+                onClick = { expanded = !expanded },
+                contentPadding = PaddingValues(0.dp)
+            ) {
+                Text(
+                    text = if (expanded) stringResource(R.string.read_less) else stringResource(R.string.read_more),
+                    style = MaterialTheme.typography.labelLarge.copy(color = MaterialTheme.colorScheme.primary)
+                )
+            }
         }
     }
 }
