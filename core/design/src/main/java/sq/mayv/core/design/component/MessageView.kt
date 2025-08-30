@@ -2,6 +2,7 @@ package sq.mayv.core.design.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -24,37 +25,25 @@ fun MessageView(
     message: String
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+        modifier = modifier
+            .width(300.dp)
     ) {
         Card(
             modifier = Modifier
-                .width(300.dp)
-                .wrapContentHeight()
+                .fillMaxWidth()
                 .align(Alignment.Center),
             shape = RoundedCornerShape(10.dp),
             border = border
         ) {
-
-            Box(
-                modifier = Modifier
-                    .padding(vertical = 20.dp)
+            Text(
+                modifier = modifier
+                    .padding(vertical = 20.dp, horizontal = 15.dp)
                     .fillMaxWidth(),
-                contentAlignment = Alignment.Center,
-                propagateMinConstraints = false
-            ) {
-
-                Text(
-                    modifier = modifier
-                        .align(alignment = Alignment.Center)
-                        .padding(horizontal = 15.dp),
-                    text = message,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
-                )
-            }
+                text = message,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
+            )
         }
     }
 }

@@ -46,6 +46,37 @@ class MoviesRepository @Inject constructor(
         }
     }
 
+    override fun loadTopRatedMovies(
+        pageIndex: Int,
+        languageCode: String
+    ): Flow<GenericState<List<MovieDetails>>> = flow {
+        try {
+            val remoteState =
+                remoteDataSource.loadTopRatedMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
+            when (remoteState) {
+                is GenericState.Success -> {
+                    localDataSource.insertMovies(list = remoteState.data)
+                    emit(remoteState)
+                }
+
+                is GenericState.Failure -> {
+                    emit(remoteState)
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            val localState =
+                localDataSource.getTopRatedMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
+            emit(localState)
+        }
+    }
+
     override fun loadPopularMovies(
         pageIndex: Int,
         languageCode: String

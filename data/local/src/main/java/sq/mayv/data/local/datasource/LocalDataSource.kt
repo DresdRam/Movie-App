@@ -28,6 +28,18 @@ class LocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun getTopRatedMovies(
+        pageIndex: Int,
+        language: Language
+    ): GenericState<List<MovieDetails>> {
+        return try {
+            val movies = moviesDao.getTopRatedMovies()
+            GenericState.Success(data = moviesMapper.mapToModel(list = movies))
+        } catch (e: Exception) {
+            GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
+        }
+    }
+
     override suspend fun getPopularMovies(
         pageIndex: Int,
         language: Language

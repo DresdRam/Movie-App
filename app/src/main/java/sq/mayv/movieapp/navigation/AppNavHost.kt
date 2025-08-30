@@ -8,6 +8,8 @@ import sq.mayv.feature.home.ui.HomeRoute
 import sq.mayv.feature.home.ui.homeScreen
 import sq.mayv.feature.movie_details.ui.MovieDetailsRoute
 import sq.mayv.feature.movie_details.ui.movieDetailsScreen
+import sq.mayv.feature.search.ui.SearchRoute
+import sq.mayv.feature.search.ui.searchScreen
 
 @Composable
 fun AppNavHost(
@@ -24,12 +26,17 @@ fun AppNavHost(
                 navController.navigate(MovieDetailsRoute(movieId = movieId))
             },
             onSearchClick = {
-                // TODO: Navigate to search screen
+                navController.navigate(SearchRoute)
             }
         )
         movieDetailsScreen(
             onBackClicked = {
                 navController.navigateUp()
+            }
+        )
+        searchScreen(
+            onMovieClick = { movieId ->
+                navController.navigate(MovieDetailsRoute(movieId = movieId))
             }
         )
     }

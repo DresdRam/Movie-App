@@ -2,6 +2,7 @@ package sq.mayv.feature.home.ui
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -94,9 +95,10 @@ fun ScreenContent(
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             SearchView(
                 onSearchClick = {
@@ -105,7 +107,9 @@ fun ScreenContent(
             )
 
             TitleView(
-                modifier = Modifier.padding(top = 12.dp),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 12.dp),
                 title = stringResource(R.string.upcoming_movies)
             )
             MoviesAnimatedView(
@@ -117,7 +121,9 @@ fun ScreenContent(
             )
 
             TitleView(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 16.dp),
                 title = stringResource(R.string.popular_movies)
             )
             MoviesAnimatedView(
@@ -129,7 +135,9 @@ fun ScreenContent(
             )
 
             TitleView(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier
+                    .align(Alignment.Start)
+                    .padding(top = 16.dp),
                 title = stringResource(R.string.trending_movies)
             )
             MoviesAnimatedView(

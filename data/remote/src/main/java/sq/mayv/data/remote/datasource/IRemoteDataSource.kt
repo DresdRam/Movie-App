@@ -12,6 +12,11 @@ interface IRemoteDataSource {
         language: Language
     ): GenericState<List<MovieDetails>>
 
+    suspend fun loadTopRatedMovies(
+        pageIndex: Int,
+        language: Language
+    ): GenericState<List<MovieDetails>>
+
     suspend fun loadPopularMovies(
         pageIndex: Int,
         language: Language

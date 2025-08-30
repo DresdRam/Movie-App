@@ -51,7 +51,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import sq.mayv.core.common.extension.toDateMillis
 import sq.mayv.core.common.extension.toDateString
-import sq.mayv.data.model.network.Genre
+import sq.mayv.core.design.component.MovieDurationView
+import sq.mayv.core.design.component.MovieGenresView
+import sq.mayv.core.design.component.MovieRatingView
+import sq.mayv.core.design.component.MovieReleaseDateView
 import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.feature.movie_details.R
 import sq.mayv.feature.movie_details.ui.state.MovieDetailsUIState
@@ -193,7 +196,10 @@ fun MovieExtraInfoView(
                 modifier = Modifier
                     .wrapContentWidth()
                     .wrapContentHeight(),
-                releaseDate = movieDetails.releaseDate
+                releaseDate = movieDetails.releaseDate.toDateMillis().toDateString(
+                    pattern = "MMMM yyyy",
+                    locale = Locale.getDefault()
+                )
             )
             Text(
                 text = " | ",
@@ -210,7 +216,7 @@ fun MovieExtraInfoView(
 
         MovieGenresView(
             modifier = Modifier.padding(top = 10.dp),
-            genres = movieDetails.genres ?: emptyList()
+            genres = movieDetails.genres?.map { it.name } ?: emptyList()
         )
 
         MovieRatingView(
@@ -285,92 +291,6 @@ fun ExpandableText(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun MovieReleaseDateView(
-    modifier: Modifier = Modifier,
-    releaseDate: String
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_calendar),
-            contentDescription = "",
-        )
-        Text(
-            modifier = Modifier.padding(start = 6.dp),
-            text = releaseDate.toDateMillis().toDateString(locale = Locale.getDefault()),
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-fun MovieDurationView(
-    modifier: Modifier = Modifier,
-    duration: Int
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_clock),
-            contentDescription = "",
-        )
-        Text(
-            modifier = Modifier.padding(start = 6.dp),
-            text = stringResource(R.string.movie_duration_format, duration),
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-fun MovieGenresView(
-    modifier: Modifier = Modifier,
-    genres: List<Genre>
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_movie),
-            contentDescription = "",
-        )
-        Text(
-            modifier = Modifier.padding(start = 6.dp),
-            text = genres.joinToString(", ") { it.name },
-            fontSize = 14.sp
-        )
-    }
-}
-
-@Composable
-fun MovieRatingView(
-    modifier: Modifier = Modifier,
-    rating: Double
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_star),
-            contentDescription = "",
-            tint = colorResource(R.color.rating_color)
-        )
-        Text(
-            modifier = Modifier.padding(start = 4.dp),
-            text = stringResource(R.string.double_format, rating),
-            fontSize = 14.sp,
-            color = colorResource(R.color.rating_color)
-        )
     }
 }
 

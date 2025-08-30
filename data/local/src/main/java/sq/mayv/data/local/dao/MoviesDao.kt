@@ -35,15 +35,19 @@ interface MoviesDao {
     suspend fun getAllGenres(): List<GenreEntity>
 
     @Transaction
+    @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
+    suspend fun getUpcomingMovies(): List<MovieWithGenres>
+
+    @Transaction
+    @Query("SELECT * FROM movies ORDER BY voteCount DESC")
+    suspend fun getTopRatedMovies(): List<MovieWithGenres>
+
+    @Transaction
     @Query("SELECT * FROM movies ORDER BY popularity DESC")
     suspend fun getPopularMovies(): List<MovieWithGenres>
 
     @Transaction
     @Query("SELECT * FROM movies ORDER BY voteAverage DESC")
     suspend fun getTrendingMovies(): List<MovieWithGenres>
-
-    @Transaction
-    @Query("SELECT * FROM movies ORDER BY releaseDate DESC")
-    suspend fun getUpcomingMovies(): List<MovieWithGenres>
 
 }

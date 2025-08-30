@@ -12,6 +12,11 @@ interface IMoviesRepository {
         languageCode: String
     ): Flow<GenericState<List<MovieDetails>>>
 
+    fun loadTopRatedMovies(
+        pageIndex: Int,
+        languageCode: String
+    ): Flow<GenericState<List<MovieDetails>>>
+
     fun loadPopularMovies(
         pageIndex: Int,
         languageCode: String

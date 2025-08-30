@@ -21,9 +21,21 @@ class RemoteDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         val results = apiService.getUpcomingMovies(page = pageIndex, language = language.code)
         return if (results.isSuccessful) {
-            val gson = Gson()
-            val jsonString = gson.toJson(results.body())
-            Log.d("Remote","loadUpcomingMovies: $jsonString")
+            val body = results.body()?.results?.map {
+                it.appendImageUrl()
+            } ?: emptyList()
+            GenericState.Success(data = body)
+        } else {
+            GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
+        }
+    }
+
+    override suspend fun loadTopRatedMovies(
+        pageIndex: Int,
+        language: Language
+    ): GenericState<List<MovieDetails>> {
+        val results = apiService.getTopRatedMovies(page = pageIndex, language = language.code)
+        return if (results.isSuccessful) {
             val body = results.body()?.results?.map {
                 it.appendImageUrl()
             } ?: emptyList()

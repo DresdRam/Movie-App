@@ -18,6 +18,7 @@ interface MoviesApiService {
         private const val SEARCH_MOVIES_ENDPOINT = "search/movie"
         private const val MOVIE_DETAILS_ENDPOINT = "movie/{movieId}"
         private const val UPCOMING_MOVIES_ENDPOINT = "movie/upcoming"
+        private const val TOP_RATED_MOVIES_ENDPOINT = "movie/top_rated"
         private const val POPULAR_MOVIES_ENDPOINT = "movie/popular"
         private const val TRENDING_MOVIES_ENDPOINT = "trending/movie/day"
     }
@@ -45,6 +46,13 @@ interface MoviesApiService {
 
     @GET(UPCOMING_MOVIES_ENDPOINT)
     suspend fun getUpcomingMovies(
+        @Header("Authorization") token: String = "Bearer $API_KEY",
+        @Query("page") page: Int,
+        @Query("language") language: String = "en"
+    ): Response<PagingResponse<MovieDetails>>
+
+    @GET(TOP_RATED_MOVIES_ENDPOINT)
+    suspend fun getTopRatedMovies(
         @Header("Authorization") token: String = "Bearer $API_KEY",
         @Query("page") page: Int,
         @Query("language") language: String = "en"

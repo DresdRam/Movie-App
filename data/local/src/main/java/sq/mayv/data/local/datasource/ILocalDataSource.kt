@@ -12,6 +12,11 @@ interface ILocalDataSource {
         language: Language
     ): GenericState<List<MovieDetails>>
 
+    suspend fun getTopRatedMovies(
+        pageIndex: Int,
+        language: Language
+    ): GenericState<List<MovieDetails>>
+
     suspend fun getPopularMovies(
         pageIndex: Int,
         language: Language

@@ -44,6 +44,7 @@ dependencies {
 
     implementation(project(":feature:home"))
     implementation(project(":feature:movie_details"))
+    implementation(project(":feature:search"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
