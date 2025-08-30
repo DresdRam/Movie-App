@@ -24,7 +24,7 @@ android {
 
         buildConfigField("String", "IMAGE_URL", "\"https://image.tmdb.org/t/p\"")
         buildConfigField("String", "TMDB_BASE_URL", "\"https://api.themoviedb.org/3/\"")
-        buildConfigField("String", "API_KEY", "\"${getLocalProperty(key = "API_KEY")}\"")
+        buildConfigField("String", "API_KEY", "\"eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MmYxYmFiYjJiNDk1MWUzZWFmZmM2ZTQ2ODUzZGY2MCIsIm5iZiI6MTc1NjIwNzE0Ni4xMTMsInN1YiI6IjY4YWQ5ODJhZTQxMTZkNDkyNjZjZjE5ZSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xC8V6TVPldePS7bigD8sOy35kS8bl4pguEUwtws8XMA\"")
     }
 
     buildTypes {
