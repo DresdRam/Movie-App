@@ -12,6 +12,7 @@ A simple movies app that fetches movies data using [TheMovieDB API](https://deve
 ## To improve/add
 - [X] Unit test cases
 - [X] Ui test cases
+- [X] Paging
 
 
 ## Clean Architecture
