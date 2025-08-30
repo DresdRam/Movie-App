@@ -4,20 +4,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import sq.mayv.feature.home.ui.Home
+import sq.mayv.feature.home.ui.HomeRoute
 import sq.mayv.feature.home.ui.homeScreen
+import sq.mayv.feature.movie_details.ui.MovieDetailsRoute
+import sq.mayv.feature.movie_details.ui.movieDetailsScreen
 
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    onBackClick: () -> Unit,
+    navController: NavHostController
 ) {
     NavHost(
         navController = navController,
-        startDestination = Home,
+        startDestination = HomeRoute,
         modifier = modifier
     ) {
-        homeScreen()
+        homeScreen(
+            onMovieClick = { movieId ->
+                navController.navigate(MovieDetailsRoute(movieId = movieId))
+            },
+            onSearchClick = {
+                // TODO: Navigate to search screen
+            }
+        )
+        movieDetailsScreen(
+            onBackClicked = {
+                navController.navigateUp()
+            }
+        )
     }
 }

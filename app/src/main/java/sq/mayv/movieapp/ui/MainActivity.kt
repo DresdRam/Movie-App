@@ -25,8 +25,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(innerPadding),
-                        navController = rememberNavController(),
-                        onBackClick = { finish() }
+                        navController = rememberNavController()
                     )
                 }
             }

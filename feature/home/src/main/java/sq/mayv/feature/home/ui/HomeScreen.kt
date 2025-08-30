@@ -1,6 +1,5 @@
 package sq.mayv.feature.home.ui
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -35,9 +34,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,7 +55,9 @@ import sq.mayv.feature.home.ui.state.MoviesUIState
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onMovieClick: (movieId: Int) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     val upcomingMoviesState by viewModel.upcomingMoviesState.collectAsState()
     val popularMoviesState by viewModel.popularMoviesState.collectAsState()
@@ -75,7 +74,11 @@ fun HomeScreen(
         modifier = modifier,
         upcomingMoviesState = upcomingMoviesState,
         popularMoviesState = popularMoviesState,
-        trendingMoviesState = trendingMoviesState
+        trendingMoviesState = trendingMoviesState,
+        onMovieClick = { movieId ->
+            onMovieClick.invoke(movieId)
+        },
+        onSearchClick = onSearchClick
     )
 }
 
@@ -84,7 +87,9 @@ fun ScreenContent(
     modifier: Modifier = Modifier,
     upcomingMoviesState: MoviesUIState,
     popularMoviesState: MoviesUIState,
-    trendingMoviesState: MoviesUIState
+    trendingMoviesState: MoviesUIState,
+    onMovieClick: (movieId: Int) -> Unit,
+    onSearchClick: () -> Unit
 ) {
     Surface(modifier = modifier.fillMaxSize()) {
         Column(
@@ -95,7 +100,7 @@ fun ScreenContent(
         ) {
             SearchView(
                 onSearchClick = {
-                    // TODO: Navigate to search screen
+                    onSearchClick.invoke()
                 }
             )
 
@@ -107,8 +112,7 @@ fun ScreenContent(
                 modifier = Modifier.padding(top = 6.dp),
                 moviesState = upcomingMoviesState,
                 onItemClick = { movieId ->
-                    Log.d("Movie", "movie id: $movieId")
-                    // TODO: Navigate to movie details screen
+                    onMovieClick.invoke(movieId)
                 }
             )
 
@@ -120,8 +124,7 @@ fun ScreenContent(
                 modifier = Modifier.padding(top = 6.dp),
                 moviesState = popularMoviesState,
                 onItemClick = { movieId ->
-                    Log.d("Movie", "movie id: $movieId")
-                    // TODO: Navigate to movie details screen
+                    onMovieClick.invoke(movieId)
                 }
             )
 
@@ -133,8 +136,7 @@ fun ScreenContent(
                 modifier = Modifier.padding(top = 6.dp),
                 moviesState = trendingMoviesState,
                 onItemClick = { movieId ->
-                    Log.d("Movie", "movie id: $movieId")
-                    // TODO: Navigate to movie details screen
+                    onMovieClick.invoke(movieId)
                 }
             )
         }

@@ -5,11 +5,11 @@ import sq.mayv.data.model.network.MovieDetails
 
 sealed interface MoviesUIState {
 
-    object Loading: MoviesUIState
+    object Loading : MoviesUIState
 
-    object Empty: MoviesUIState
+    object Empty : MoviesUIState
 
-    data class Success(val movies: List<MovieDetails>): MoviesUIState
+    data class Success(val movies: List<MovieDetails>) : MoviesUIState
 
-    data class Error(val errorCode: ErrorCode): MoviesUIState
+    data class Error(val errorCode: ErrorCode) : MoviesUIState
 }
