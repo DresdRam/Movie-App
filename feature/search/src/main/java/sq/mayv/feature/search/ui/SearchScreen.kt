@@ -423,7 +423,7 @@ fun SearchTextField(
             )
 
             TextButton(
-                modifier = Modifier.padding(start = 10.dp),
+                modifier = Modifier.padding(horizontal = 10.dp),
                 onClick = {
                     focusManager.clearFocus()
                     keyboardController?.hide()

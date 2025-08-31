@@ -12,7 +12,8 @@ import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.data.remote.datasource.IRemoteDataSource
 
 class MoviesRepository @Inject constructor(
-    private val localDataSource: ILocalDataSource, private val remoteDataSource: IRemoteDataSource
+    private val localDataSource: ILocalDataSource,
+    private val remoteDataSource: IRemoteDataSource
 ) : IMoviesRepository {
 
     override fun loadUpcomingMovies(
@@ -20,29 +21,26 @@ class MoviesRepository @Inject constructor(
         languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
-            val remoteState =
-                remoteDataSource.loadUpcomingMovies(
-                    pageIndex = pageIndex,
-                    language = Language.from(code = languageCode)
-                )
-            when (remoteState) {
-                is GenericState.Success -> {
-                    localDataSource.insertMovies(list = remoteState.data)
-                    emit(remoteState)
-                }
-
-                is GenericState.Failure -> {
-                    emit(remoteState)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
             val localState =
                 localDataSource.getUpcomingMovies(
                     pageIndex = pageIndex,
                     language = Language.from(code = languageCode)
                 )
+
             emit(localState)
+
+            val remoteState =
+                remoteDataSource.loadUpcomingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
+
+            if (remoteState is GenericState.Success) {
+                localDataSource.insertMovies(list = remoteState.data)
+                emit(remoteState)
+            }
+        } catch (e: Exception) {
+            emit(GenericState.Failure(errorCode = ErrorCode.SERVER_ERROR))
         }
     }
 
@@ -56,18 +54,12 @@ class MoviesRepository @Inject constructor(
                     pageIndex = pageIndex,
                     language = Language.from(code = languageCode)
                 )
-            when (remoteState) {
-                is GenericState.Success -> {
-                    localDataSource.insertMovies(list = remoteState.data)
-                    emit(remoteState)
-                }
 
-                is GenericState.Failure -> {
-                    emit(remoteState)
-                }
+            if (remoteState is GenericState.Success) {
+                localDataSource.insertMovies(list = remoteState.data)
+                emit(remoteState)
             }
         } catch (e: Exception) {
-            e.printStackTrace()
             val localState =
                 localDataSource.getTopRatedMovies(
                     pageIndex = pageIndex,
@@ -82,28 +74,26 @@ class MoviesRepository @Inject constructor(
         languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
-            val remoteState =
-                remoteDataSource.loadPopularMovies(
-                    pageIndex = pageIndex,
-                    language = Language.from(code = languageCode)
-                )
-            when (remoteState) {
-                is GenericState.Success -> {
-                    localDataSource.insertMovies(list = remoteState.data)
-                    emit(remoteState)
-                }
-
-                is GenericState.Failure -> {
-                    emit(remoteState)
-                }
-            }
-        } catch (e: Exception) {
             val localState =
                 localDataSource.getPopularMovies(
                     pageIndex = pageIndex,
                     language = Language.from(code = languageCode)
                 )
+
             emit(localState)
+
+            val remoteState =
+                remoteDataSource.loadPopularMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
+
+            if (remoteState is GenericState.Success) {
+                localDataSource.insertMovies(list = remoteState.data)
+                emit(remoteState)
+            }
+        } catch (e: Exception) {
+            emit(GenericState.Failure(errorCode = ErrorCode.SERVER_ERROR))
         }
     }
 
@@ -112,28 +102,26 @@ class MoviesRepository @Inject constructor(
         languageCode: String
     ): Flow<GenericState<List<MovieDetails>>> = flow {
         try {
-            val remoteState =
-                remoteDataSource.loadTrendingMovies(
-                    pageIndex = pageIndex,
-                    language = Language.from(code = languageCode)
-                )
-            when (remoteState) {
-                is GenericState.Success -> {
-                    localDataSource.insertMovies(list = remoteState.data)
-                    emit(remoteState)
-                }
-
-                is GenericState.Failure -> {
-                    emit(remoteState)
-                }
-            }
-        } catch (e: Exception) {
             val localState =
                 localDataSource.getTrendingMovies(
                     pageIndex = pageIndex,
                     language = Language.from(code = languageCode)
                 )
+
             emit(localState)
+
+            val remoteState =
+                remoteDataSource.loadTrendingMovies(
+                    pageIndex = pageIndex,
+                    language = Language.from(code = languageCode)
+                )
+
+            if (remoteState is GenericState.Success) {
+                localDataSource.insertMovies(list = remoteState.data)
+                emit(remoteState)
+            }
+        } catch (e: Exception) {
+            emit(GenericState.Failure(errorCode = ErrorCode.SERVER_ERROR))
         }
     }
 

@@ -10,14 +10,12 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import sq.mayv.core.common.ConnectivityObserver
 import sq.mayv.feature.home.domain.LoadPopularMoviesUseCase
 import sq.mayv.feature.home.domain.LoadTrendingMoviesUseCase
 import sq.mayv.feature.home.domain.LoadUpcomingMoviesUseCase
 import sq.mayv.feature.home.ui.state.MoviesUIState
 import java.util.Locale
-
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(

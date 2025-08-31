@@ -47,11 +47,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import sq.mayv.core.common.ErrorCode
+import sq.mayv.core.common.extension.toDateMillis
+import sq.mayv.core.common.extension.toDateString
 import sq.mayv.core.design.component.MessageView
+import sq.mayv.core.design.component.MovieReleaseDateView
 import sq.mayv.core.design.extension.shimmer
 import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.feature.home.R
 import sq.mayv.feature.home.ui.state.MoviesUIState
+import java.util.Locale
 
 @Composable
 fun HomeScreen(
@@ -243,23 +247,33 @@ fun MoviesItemShimmerView() {
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(15.dp)
     ) {
-        Column {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
             Box(
                 modifier = Modifier
                     .width(140.dp)
-                    .height(210.dp)
+                    .aspectRatio(2f / 3f)
                     .shimmer()
             )
 
-            MovieName(
+            Box(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-                    .padding(all = 6.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .shimmer(),
-                name = ""
+                    .padding(top = 6.dp, start = 6.dp, end = 6.dp)
+                    .width(60.dp)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .shimmer()
+            )
+
+            Box(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .width(60.dp)
+                    .height(20.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .shimmer()
             )
         }
     }
@@ -281,8 +295,9 @@ fun MoviesItemView(
         shape = RoundedCornerShape(10.dp),
         elevation = CardDefaults.cardElevation(15.dp)
     ) {
-        Column {
-
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             MoviePoster(
                 modifier = Modifier
                     .width(140.dp)
@@ -293,8 +308,20 @@ fun MoviesItemView(
             MovieName(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 6.dp),
+                    .padding(top = 6.dp, start = 6.dp, end = 6.dp),
                 name = movie.title
+            )
+
+            MovieReleaseDateView(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+                    .wrapContentWidth()
+                    .wrapContentHeight(),
+                releaseDate = movie.releaseDate.toDateMillis().toDateString(
+                    pattern = "yyyy",
+                    locale = Locale.getDefault(),
+                ),
+                fontSize = 12.sp
             )
         }
     }
