@@ -1,4 +1,4 @@
-package sq.mayv.data.model.network
+package sq.mayv.core.common
 
 enum class Source {
     Local,

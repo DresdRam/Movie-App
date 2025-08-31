@@ -2,7 +2,8 @@ package sq.mayv.data.remote.datasource
 
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
-import sq.mayv.data.model.movies.Language
+import sq.mayv.core.common.Language
+import sq.mayv.core.common.Source
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.data.remote.BuildConfig
@@ -23,7 +24,7 @@ class RemoteDataSource @Inject constructor(
                 val body = results.body()?.results?.map {
                     it.appendImageUrl()
                 } ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -42,7 +43,7 @@ class RemoteDataSource @Inject constructor(
                 val body = results.body()?.results?.map {
                     it.appendImageUrl()
                 } ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -61,7 +62,7 @@ class RemoteDataSource @Inject constructor(
                 val body = results.body()?.results?.map {
                     it.appendImageUrl()
                 } ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -80,7 +81,7 @@ class RemoteDataSource @Inject constructor(
                 val body = results.body()?.results?.map {
                     it.appendImageUrl()
                 } ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -94,7 +95,7 @@ class RemoteDataSource @Inject constructor(
             val results = apiService.getGenres(language = language.code)
             return if (results.isSuccessful) {
                 val body = results.body()?.genres ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -118,7 +119,7 @@ class RemoteDataSource @Inject constructor(
                 val body = results.body()?.results?.map {
                     it.appendImageUrl()
                 } ?: emptyList()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }
@@ -135,7 +136,7 @@ class RemoteDataSource @Inject constructor(
             val results = apiService.getMovieDetails(movieId = movieId, language = language.code)
             return if (results.isSuccessful) {
                 val body = results.body()?.appendImageUrl()
-                GenericState.Success(data = body)
+                GenericState.Success(data = body, source = Source.Remote)
             } else {
                 GenericState.Failure(errorCode = ErrorCode.from(code = results.code()))
             }

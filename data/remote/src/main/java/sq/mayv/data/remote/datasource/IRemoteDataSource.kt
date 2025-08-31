@@ -1,7 +1,7 @@
 package sq.mayv.data.remote.datasource
 
 import sq.mayv.core.common.GenericState
-import sq.mayv.data.model.movies.Language
+import sq.mayv.core.common.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
 

@@ -2,10 +2,11 @@ package sq.mayv.data.local.datasource
 
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
+import sq.mayv.core.common.Language
+import sq.mayv.core.common.Source
 import sq.mayv.data.local.dao.MoviesDao
 import sq.mayv.data.local.mapper.GenresEntityModelMapper
 import sq.mayv.data.local.mapper.MoviesEntityModelMapper
-import sq.mayv.data.model.movies.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
 import javax.inject.Inject
@@ -22,7 +23,10 @@ class LocalDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         return try {
             val movies = moviesDao.getUpcomingMovies()
-            GenericState.Success(data = moviesMapper.mapToModel(list = movies))
+            GenericState.Success(
+                data = moviesMapper.mapToModel(list = movies),
+                source = Source.Local
+            )
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
         }
@@ -34,7 +38,10 @@ class LocalDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         return try {
             val movies = moviesDao.getTopRatedMovies()
-            GenericState.Success(data = moviesMapper.mapToModel(list = movies))
+            GenericState.Success(
+                data = moviesMapper.mapToModel(list = movies),
+                source = Source.Local
+            )
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
         }
@@ -46,7 +53,10 @@ class LocalDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         return try {
             val movies = moviesDao.getPopularMovies()
-            GenericState.Success(data = moviesMapper.mapToModel(list = movies))
+            GenericState.Success(
+                data = moviesMapper.mapToModel(list = movies),
+                source = Source.Local
+            )
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
         }
@@ -55,7 +65,10 @@ class LocalDataSource @Inject constructor(
     override suspend fun loadAllGenres(language: Language): GenericState<List<Genre>> {
         return try {
             val genres = moviesDao.getAllGenres()
-            GenericState.Success(data = genresMapper.mapToModel(list = genres))
+            GenericState.Success(
+                data = genresMapper.mapToModel(list = genres),
+                source = Source.Local
+            )
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
         }
@@ -67,7 +80,10 @@ class LocalDataSource @Inject constructor(
     ): GenericState<List<MovieDetails>> {
         return try {
             val movies = moviesDao.getTrendingMovies()
-            GenericState.Success(data = moviesMapper.mapToModel(list = movies))
+            GenericState.Success(
+                data = moviesMapper.mapToModel(list = movies),
+                source = Source.Local
+            )
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)
         }
@@ -80,9 +96,12 @@ class LocalDataSource @Inject constructor(
         return try {
             val movie = moviesDao.getMovieById(id = movieId)
             movie?.let {
-                GenericState.Success(data = moviesMapper.mapToModel(single = movie))
+                GenericState.Success(
+                    data = moviesMapper.mapToModel(single = movie),
+                    source = Source.Local
+                )
             } ?: run {
-                GenericState.Success(data = null)
+                GenericState.Success(data = null, source = Source.Local)
             }
         } catch (e: Exception) {
             GenericState.Failure(errorCode = ErrorCode.DATABASE_ERROR)

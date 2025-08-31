@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.flow
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
 import sq.mayv.data.local.datasource.ILocalDataSource
-import sq.mayv.data.model.movies.Language
+import sq.mayv.core.common.Language
 import sq.mayv.data.model.network.Genre
 import sq.mayv.data.model.network.MovieDetails
 import sq.mayv.data.remote.datasource.IRemoteDataSource

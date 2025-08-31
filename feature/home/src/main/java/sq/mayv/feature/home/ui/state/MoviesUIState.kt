@@ -1,6 +1,7 @@
 package sq.mayv.feature.home.ui.state
 
 import sq.mayv.core.common.ErrorCode
+import sq.mayv.core.common.Source
 import sq.mayv.data.model.network.MovieDetails
 
 sealed interface MoviesUIState {
@@ -9,7 +10,7 @@ sealed interface MoviesUIState {
 
     object Empty : MoviesUIState
 
-    data class Success(val movies: List<MovieDetails>) : MoviesUIState
+    data class Success(val movies: List<MovieDetails>, val source: Source) : MoviesUIState
 
     data class Error(val errorCode: ErrorCode) : MoviesUIState
 }
