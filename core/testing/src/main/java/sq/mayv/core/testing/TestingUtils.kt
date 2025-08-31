@@ -12,15 +12,21 @@ object TestingUtils {
     inline fun <reified T> Gson.fromJsonGeneric(json: String): T =
         this.fromJson(json, object : TypeToken<T>() {}.type)
 
-    fun moviesJsonAsString(): String {
-        val resourceAsStream = javaClass.classLoader?.getResourceAsStream("MoviesResponse.json")
+    fun moviesJsonAsString(jsonFileName: String): String {
+        val resourceAsStream = javaClass.classLoader?.getResourceAsStream(jsonFileName)
         val reader = InputStreamReader(resourceAsStream)
         return reader.use { it.readText() }
     }
 
     fun moviesJsonAsItems(): List<MovieDetails> {
-        val json = moviesJsonAsString()
+        val json = moviesJsonAsString(jsonFileName = "MoviesResponse.json")
         val response: PagingResponse<MovieDetails> = gson.fromJsonGeneric(json)
         return response.results
+    }
+
+    fun spiderManMovieAsItem(): MovieDetails {
+        val json = moviesJsonAsString(jsonFileName = "SpiderManMovieResponse.json")
+        val response: MovieDetails = gson.fromJsonGeneric(json)
+        return response
     }
 }

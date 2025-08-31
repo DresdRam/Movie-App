@@ -27,7 +27,7 @@ class MovieDetailsViewModelTest {
     }
 
     @Test
-    fun `upcoming movies state is initially loading`() = runTest {
+    fun `movie details state is initially loading`() = runTest {
         TestCase.assertEquals(MovieDetailsUIState.Loading, viewModel.movieDetailsState.value)
     }
 
