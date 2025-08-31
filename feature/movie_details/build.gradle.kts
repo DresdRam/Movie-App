@@ -40,6 +40,7 @@ dependencies {
 
     implementation(project(":core:common"))
     implementation(project(":core:design"))
+    implementation(project(":core:testing"))
     implementation(project(":data:model"))
     implementation(project(":data:repository"))
 
@@ -47,6 +48,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
@@ -65,4 +67,11 @@ dependencies {
 
     // Coil
     implementation(libs.coil.kt.compose)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
+
+    // Testing
+    implementation(libs.hilt.android.testing)
+    implementation(libs.turbine)
 }

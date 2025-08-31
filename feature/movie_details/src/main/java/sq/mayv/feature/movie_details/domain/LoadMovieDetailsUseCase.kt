@@ -6,12 +6,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
-import sq.mayv.data.repository.MoviesRepository
+import sq.mayv.data.repository.IMoviesRepository
 import sq.mayv.feature.movie_details.ui.state.MovieDetailsUIState
 import javax.inject.Inject
 
 class LoadMovieDetailsUseCase @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: IMoviesRepository
 ) {
     operator fun invoke(movieId: Int, languageCode: String): Flow<MovieDetailsUIState> =
         repository.loadMovieDetails(movieId = movieId, languageCode = languageCode).map {
