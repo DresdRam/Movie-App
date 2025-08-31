@@ -6,12 +6,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import sq.mayv.core.common.ErrorCode
 import sq.mayv.core.common.GenericState
+import sq.mayv.data.repository.IMoviesRepository
 import sq.mayv.data.repository.MoviesRepository
 import sq.mayv.feature.search.ui.state.SearchUIState
 import javax.inject.Inject
 
 class LoadTopRatedMoviesUseCase @Inject constructor(
-    private val repository: MoviesRepository
+    private val repository: IMoviesRepository
 ) {
     operator fun invoke(
         pageIndex: Int,
