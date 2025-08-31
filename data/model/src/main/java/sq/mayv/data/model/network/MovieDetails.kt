@@ -1,7 +1,9 @@
 package sq.mayv.data.model.network
 
 import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class MovieDetails(
     @SerializedName("id") val id: Int,
     @SerializedName("adult") val isAdult: Boolean,

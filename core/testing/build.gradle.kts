@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -34,10 +37,28 @@ android {
 
 dependencies {
 
+    implementation(project(":core:common"))
+    implementation(project(":data:model"))
+    implementation(project(":data:repository"))
+    implementation(project(":data:local"))
+    implementation(project(":data:remote"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Gson
+    implementation(libs.retrofit2.converter.gson)
+
+    // Hilt
+    implementation(libs.hilt.android.testing)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.android.compiler)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

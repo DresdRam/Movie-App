@@ -2,6 +2,8 @@
 agp = "8.12.2"
 gson = "2.13.1"
 kotlin = "2.2.10"
+turbine = "1.2.1"
+kotlinxCoroutinesTest = "1.10.2"
 navigationCompose = "2.9.3"
 serialization = "1.9.0"
 ksp = "2.2.10-2.0.2"
@@ -36,6 +38,7 @@ androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "j
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 navigation-compose-serialization = { module = "androidx.navigation:navigation-compose-serialization", version.ref = "navigationCompose" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -76,6 +79,9 @@ retrofit2-kotlin-serialization = { group = "com.jakewharton.retrofit", name = "r
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+
+# Turbine
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
 
 # Mock
 mockk = { module = "io.mockk:mockk", version.ref = "mockkVersion" }

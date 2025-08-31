@@ -45,4 +45,7 @@ dependencies {
 
     // Google GSON
     implementation(libs.gson)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
