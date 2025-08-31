@@ -12,12 +12,12 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import sq.mayv.core.common.ConnectivityObserver
+import sq.mayv.core.common.Source
 import sq.mayv.feature.home.domain.LoadPopularMoviesUseCase
 import sq.mayv.feature.home.domain.LoadTrendingMoviesUseCase
 import sq.mayv.feature.home.domain.LoadUpcomingMoviesUseCase
 import sq.mayv.feature.home.ui.state.MoviesUIState
 import java.util.Locale
-
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -64,22 +64,40 @@ class HomeViewModel @Inject constructor(
 
     fun getUpcomingMovies(pageIndex: Int) {
         upcomingMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
-            .onEach {
-                _upcomingMoviesState.value = it
+            .onEach { newState ->
+                _upcomingMoviesState.update { current ->
+                    if (current is MoviesUIState.Success && current.source == Source.Remote) {
+                        current
+                    } else {
+                        newState
+                    }
+                }
             }.launchIn(viewModelScope)
     }
 
     fun getPopularMovies(pageIndex: Int) {
         popularMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
-            .onEach {
-                _popularMoviesState.value = it
+            .onEach { newState ->
+                _popularMoviesState.update { current ->
+                    if (current is MoviesUIState.Success && current.source == Source.Remote) {
+                        current
+                    } else {
+                        newState
+                    }
+                }
             }.launchIn(viewModelScope)
     }
 
     fun getTrendingMovies(pageIndex: Int) {
         trendingMoviesUseCase(pageIndex = pageIndex, languageCode = Locale.getDefault().language)
-            .onEach {
-                _trendingMoviesState.value = it
+            .onEach { newState ->
+                _trendingMoviesState.update { current ->
+                    if (current is MoviesUIState.Success && current.source == Source.Remote) {
+                        current
+                    } else {
+                        newState
+                    }
+                }
             }.launchIn(viewModelScope)
     }
 }

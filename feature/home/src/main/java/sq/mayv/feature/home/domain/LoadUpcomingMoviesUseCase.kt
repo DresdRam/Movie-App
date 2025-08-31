@@ -20,7 +20,7 @@ class LoadUpcomingMoviesUseCase @Inject constructor(
                     if (it.data.isEmpty()) {
                         MoviesUIState.Empty
                     } else {
-                        MoviesUIState.Success(movies = it.data)
+                        MoviesUIState.Success(movies = it.data, source = it.source)
                     }
                 }
 

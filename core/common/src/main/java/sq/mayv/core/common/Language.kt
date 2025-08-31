@@ -1,4 +1,4 @@
-package sq.mayv.data.model.movies
+package sq.mayv.core.common
 
 enum class Language(val code: String) {
 
